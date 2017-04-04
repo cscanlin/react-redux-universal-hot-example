@@ -3,19 +3,29 @@ import {connect} from 'react-redux';
 import Helmet from 'react-helmet';
 import {initialize} from 'redux-form';
 import {WeatherForm} from 'components';
+import * as WeatherActions from 'redux/modules/weather';
 
 @connect(
-  () => ({}),
-  {initialize})
+  state => ({
+    loading: state.weather.loading,
+    loaded: state.weather.loaded,
+    data: state.weather.data,
+    error: state.weather.error,
+  }),
+  {...WeatherActions, initialize })
+
 export default class Weather extends Component {
   static propTypes = {
-    initialize: PropTypes.func.isRequired
-  }
-
+    error: PropTypes.string,
+    loading: PropTypes.bool,
+    initialize: PropTypes.func.isRequired,
+    retrieve: PropTypes.func.isRequired,
+  };
   handleSubmit = (data) => {
     console.log('submit');
-    window.alert('Data submitted! ' + JSON.stringify(data));
+    console.log(data);
     this.props.initialize('weather', {});
+    this.props.retrieve(data.zipCode);
   }
 
   render() {

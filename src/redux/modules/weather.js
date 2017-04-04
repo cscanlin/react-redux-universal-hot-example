@@ -1,38 +1,45 @@
-const IS_VALID = 'redux-example/weather/IS_VALID';
-const IS_VALID_SUCCESS = 'redux-example/weather/IS_VALID_SUCCESS';
-const IS_VALID_FAIL = 'redux-example/weather/IS_VALID_FAIL';
+const RETRIEVE = 'redux-example/weather/GET';
+const RETRIEVE_SUCCESS = 'redux-example/weather/GET_SUCCESS';
+const RETRIEVE_FAIL = 'redux-example/weather/GET_FAIL';
 
 const initialState = {
-  saveError: null,
+  loading: false,
+  loaded: false,
+  data: {},
+  error: null,
 };
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    case IS_VALID:
-      return state; // 'saving' flag handled by redux-form
-    case IS_VALID_SUCCESS:
-      const data = [...state.data];
-      data[action.result.id - 1] = action.result;
+    case RETRIEVE:
       return {
         ...state,
-        data: data,
-        saveError: null,
+        loading: true
       };
-    case IS_VALID_FAIL:
-      return typeof action.error === 'string' ? {
+    case RETRIEVE_SUCCESS:
+      return {
         ...state,
-        saveError: action.error
-      } : state;
+        loading: false,
+        loaded: true,
+        data: action.result,
+        error: null
+      };
+    case RETRIEVE_FAIL:
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        data: null,
+        error: action.error
+      };
     default:
       return state;
   }
 }
 
-export function isValidZip(data) {
+export function retrieve(zipCode) {
   return {
-    types: [IS_VALID, IS_VALID_SUCCESS, IS_VALID_FAIL],
-    promise: (client) => client.post('/weather/isValid', {
-      data
-    })
+    types: [RETRIEVE, RETRIEVE_SUCCESS, RETRIEVE_FAIL],
+    promise: (client) => client.post(`/weather/retrieve`, {zipCode: zipCode})
   };
 }
