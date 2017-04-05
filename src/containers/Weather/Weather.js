@@ -25,7 +25,7 @@ export default class Weather extends Component {
     console.log('submit');
     console.log(data.zipCode, 'weather container');
     this.props.initialize('weather', {});
-    this.props.retrieve(data.zipCode);
+    this.props.retrieve(data);
   }
 
   render() {

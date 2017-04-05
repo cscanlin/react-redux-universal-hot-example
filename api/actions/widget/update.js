@@ -1,6 +1,7 @@
 import load from './load';
 
 export default function update(req) {
+  console.log(req.body, 'update widget');
   return new Promise((resolve, reject) => {
     // write to database
     setTimeout(() => {

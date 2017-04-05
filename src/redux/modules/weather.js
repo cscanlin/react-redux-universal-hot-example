@@ -37,10 +37,10 @@ export default function reducer(state = initialState, action = {}) {
   }
 }
 
-export function retrieve(zipCode) {
-  console.log(zipCode, 'weather reducer');
+export function retrieve(data) {
+  console.log(data, 'weather reducer');
   return {
     types: [RETRIEVE, RETRIEVE_SUCCESS, RETRIEVE_FAIL],
-    promise: (client) => client.post(`/weather/retrieve`, {data: zipCode})
+    promise: (client) => client.post(`/weather/retrieve`, {data: data})
   };
 }
