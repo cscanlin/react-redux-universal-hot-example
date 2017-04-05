@@ -5,7 +5,7 @@ const RETRIEVE_FAIL = 'redux-example/weather/GET_FAIL';
 const initialState = {
   loading: false,
   loaded: false,
-  data: {},
+  data: null,
   error: null,
 };
 
@@ -38,8 +38,9 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 export function retrieve(zipCode) {
+  console.log(zipCode, 'weather reducer');
   return {
     types: [RETRIEVE, RETRIEVE_SUCCESS, RETRIEVE_FAIL],
-    promise: (client) => client.post(`/weather/retrieve`, {zipCode: zipCode})
+    promise: (client) => client.post(`/weather/retrieve`, {data: zipCode})
   };
 }

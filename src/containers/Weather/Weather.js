@@ -23,7 +23,7 @@ export default class Weather extends Component {
   };
   handleSubmit = (data) => {
     console.log('submit');
-    console.log(data);
+    console.log(data.zipCode, 'weather container');
     this.props.initialize('weather', {});
     this.props.retrieve(data.zipCode);
   }
@@ -35,7 +35,7 @@ export default class Weather extends Component {
         <h1>Weather</h1>
         <Helmet title="Weather"/>
         <WeatherForm onSubmit={this.handleSubmit}/>
-        <span>Temp: {this.props.data.query ? this.props.data.query.results.channel.item.condition.temp : ''}</span>
+        <span>Temp: {this.props.data ? this.props.data.query.results.channel.item.condition.temp : ''}</span>
       </div>
     );
   }
