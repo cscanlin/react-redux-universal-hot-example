@@ -13,13 +13,13 @@ import * as WeatherActions from 'redux/modules/weather';
     error: state.weather.error,
   }),
   {...WeatherActions, initialize })
-
 export default class Weather extends Component {
   static propTypes = {
     error: PropTypes.string,
     loading: PropTypes.bool,
     initialize: PropTypes.func.isRequired,
     retrieve: PropTypes.func.isRequired,
+    data: PropTypes.object,
   };
   handleSubmit = (data) => {
     console.log('submit');
@@ -29,11 +29,13 @@ export default class Weather extends Component {
   }
 
   render() {
+    console.log(this.props.data);
     return (
       <div className="container">
         <h1>Weather</h1>
         <Helmet title="Weather"/>
         <WeatherForm onSubmit={this.handleSubmit}/>
+        <span>Temp: {this.props.data.query ? this.props.data.query.results.channel.item.condition.temp : ''}</span>
       </div>
     );
   }
